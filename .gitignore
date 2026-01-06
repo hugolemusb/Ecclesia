@@ -1,0 +1,27 @@
+# System
+.DS_Store
+.env
+.env.local
+node_modules/
+dist/
+
+# CRITICAL: Exclude large backup files
+_RESPALDOS/
+*.zip
+*.rar
+BACKUP*/
+_IMPORTANT_VERSIONS/
+_GARBAGE/
+_CLEAN*/
+
+# Other apps
+pulpito*/
+oratoria*/
+iglesia*/
+temp*/
+github_commit*
+
+# Nested copies
+ecclesia-restored/
+ecclesia-final/
+ecclesia-dec27/

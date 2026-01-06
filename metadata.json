@@ -1,0 +1,8 @@
+
+{
+  "name": "IMP Lo Prado - Ecclesia Insights",
+  "description": "Sistema de análisis de hermandad y entorno para la Iglesia Metodista Pentecostal Lo Prado.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
