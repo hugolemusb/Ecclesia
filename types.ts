@@ -418,6 +418,11 @@ export interface AppState {
   archivos: any[];
   dismissedNoticeIds: string[];
   ultimaModificacion: string;
+  cleaningGroups?: any[];
+  cleaningServices?: any[];
+  cleaningAbsences?: any[];
+  urgentCleanings?: any[];
+  cleaningConfig?: any;
 }
 
 // --- MISSING TYPES FOR CONSTANTS.TSX ---
