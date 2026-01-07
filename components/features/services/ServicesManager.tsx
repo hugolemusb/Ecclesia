@@ -5,6 +5,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { ServiceProgram } from '../../../types/services';
 import { TemplateLibrary } from './TemplateLibrary';
 import { MonthlyCalendar } from './MonthlyCalendar';
+import { CleaningManager } from './cleaning/CleaningManager';
 
 export const ServicesManager: React.FC = () => {
     const [selectedMonth, setSelectedMonth] = useState(new Date());
@@ -72,7 +73,43 @@ export const ServicesManager: React.FC = () => {
 
     return (
         <DndProvider backend={HTML5Backend}>
-            <div className="h-screen flex bg-gray-50">
+            
+            {/* View Mode Tabs */}
+            <div className="bg-white border-b p-4 flex gap-2">
+                <button
+                    onClick={() => setViewMode('calendar')}
+                    className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                        viewMode === 'calendar'
+                            ? 'bg-blue-600 text-white shadow-lg'
+                            : 'bg-white text-gray-600 hover:bg-gray-100 border'
+                    }`}
+                >
+                    📅 Calendario
+                </button>
+                <button
+                    onClick={() => setViewMode('history')}
+                    className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                        viewMode === 'history'
+                            ? 'bg-blue-600 text-white shadow-lg'
+                            : 'bg-white text-gray-600 hover:bg-gray-100 border'
+                    }`}
+                >
+                    📜 Histórico
+                </button>
+                <button
+                    onClick={() => setViewMode('aseo')}
+                    className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                        viewMode === 'aseo'
+                            ? 'bg-blue-600 text-white shadow-lg'
+                            : 'bg-white text-gray-600 hover:bg-gray-100 border'
+                    }`}
+                >
+                    🧹 Aseo del Templo
+                </button>
+            </div>
+
+{viewMode === 'calendar' && (
+                <div className="h-screen flex bg-gray-50">
                 {/* Template Library Sidebar */}
                 <div style={{ width: `${sidebarWidth}px` }} className="flex-shrink-0">
                     <TemplateLibrary
@@ -114,6 +151,12 @@ export const ServicesManager: React.FC = () => {
                     />
                 </div>
             </div>
+                    )}
+
+            {viewMode === 'aseo' && (
+                <CleaningManager />
+            )}
+
         </DndProvider>
     );
 };
