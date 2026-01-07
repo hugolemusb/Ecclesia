@@ -6,6 +6,8 @@ export interface CleaningGroup {
   phone: string;
   keyHolder: string;
   preferredTime: string;
+  scheduledDate?: string;  // Fecha asignada
+  arrivalTime?: string;    // Hora de llegada
 }
 
 export interface ChurchService {
@@ -43,12 +45,18 @@ export interface Absence {
   createdAt: string;
 }
 
+export interface ManualPerson {
+  name: string;
+  phone: string;
+}
+
 export interface UrgentCleaning {
   id: string;
   date: string;
   time: string;
   reason: string;
-  assignedGroup: CleaningGroup;
+  assignedGroup?: CleaningGroup;   // Grupo existente
+  manualPersons?: ManualPerson[];  // O personas manuales
   details: string;
   type: 'urgent';
   createdAt: Date;
@@ -68,6 +76,14 @@ export interface CleaningExportConfig {
 export interface BibleVerse {
   text: string;
   reference: string;
+}
+
+export interface EventObservation {
+  scheduleId: string;    // ID del evento
+  date: string;
+  observations: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export type ViewMode = 'weekly' | 'monthly';

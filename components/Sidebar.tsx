@@ -20,7 +20,6 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, currentUser,
         { id: 'families', label: 'Grupos Familiares', icon: <UsersRound size={20} />, roles: ['ADMIN', 'PASTOR', 'LIDER'] },
         { id: 'surveys', label: 'Encuestas', icon: <ClipboardCheck size={20} />, roles: ['ADMIN', 'PASTOR', 'LIDER'] },
         { id: 'services-management', label: 'Gestión de Servicios', icon: <Calendar size={20} />, roles: ['ADMIN', 'PASTOR', 'LIDER'] },
-        { id: 'cleaning-management', label: 'Aseo del Templo', icon: <Search size={20} />, roles: ['ADMIN', 'PASTOR', 'LIDER'] },        { id: 'community', label: 'Entorno Social', icon: <Search size={20} />, roles: ['ADMIN', 'PASTOR', 'LIDER'] },
         { id: 'analysis', label: 'Análisis IA', icon: <Sparkles size={20} />, roles: ['ADMIN', 'PASTOR'] },
         { id: 'settings', label: 'Configuración', icon: <SettingsIcon size={20} />, roles: ['ADMIN'] },
     ];

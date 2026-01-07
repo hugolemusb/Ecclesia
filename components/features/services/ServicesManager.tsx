@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
+import { db } from '../../../db';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { ServiceProgram } from '../../../types/services';
 import { TemplateLibrary } from './TemplateLibrary';
@@ -10,26 +11,63 @@ export const ServicesManager: React.FC = () => {
     const [programs, setPrograms] = useState<ServiceProgram[]>([]);
     const [sidebarWidth, setSidebarWidth] = useState(320); // pixels
 
+    const [viewMode, setViewMode] = useState<'calendar' | 'history' | 'aseo'>('calendar');
     useEffect(() => {
-        // Load programs from localStorage
-        const savedPrograms = localStorage.getItem('servicePrograms');
-        if (savedPrograms) {
-            const parsed = JSON.parse(savedPrograms);
-            // Convert date strings back to Date objects
-            const programsWithDates = parsed.map((p: any) => ({
-                ...p,
-                date: new Date(p.date),
-                createdAt: new Date(p.createdAt),
-                updatedAt: new Date(p.updatedAt),
-            }));
-            setPrograms(programsWithDates);
-        }
+        const loadPrograms = async () => {
+            try {
+                const state = await db.loadAll();
+                if (state.events && state.events.length > 0) {
+                    // Convert CalendarEvent to ServiceProgram
+                    const programs: ServiceProgram[] = state.events.map(event => ({
+                        id: event.id,
+                        title: event.title || "Sin título",
+                        type: "culto-dominical-am" as ServiceType,
+                        date: new Date(event.startDate),
+                        time: new Date(event.startDate).toLocaleTimeString("es-CL", { hour: "2-digit", minute: "2-digit" }),
+                        minister: "",
+                        status: "confirmed" as ServiceStatus,
+                        createdAt: new Date(),
+                        updatedAt: new Date(),
+                        version: 1,
+                        sections: []
+                    }));
+                    setPrograms(programs);
+                }
+            } catch (error) {
+                console.error("Error loading programs:", error);
+            }
+        };
+        loadPrograms();
     }, []);
 
-    const handleProgramsChange = (updated: ServiceProgram[]) => {
+    const handleProgramsChange = async (updated: ServiceProgram[]) => {
         setPrograms(updated);
-        // Save to localStorage
-        localStorage.setItem('servicePrograms', JSON.stringify(updated));
+        // Save to database (sync with Dashboard calendar)
+        const state = await db.loadAll();
+        // Convert ServiceProgram to CalendarEvent
+        const events = updated.map(program => ({
+            id: program.id,
+            title: program.title,
+            description: program.sections.find(s => s.type === "notes")?.data?.content || "",
+            type: "sermon" as any,
+            startDate: new Date(program.date).toISOString(),
+            endDate: new Date(program.date).toISOString(),
+            location: "",
+        }));
+        await db.saveAll({ ...state, events });
+    };
+
+    const handleDuplicateProgram = (program: ServiceProgram) => {
+        const duplicated: ServiceProgram = {
+            ...program,
+            id: Date.now().toString(),
+            title: `${program.title} (Copia)`,
+            date: new Date(),
+            status: 'pending',
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        };
+        handleProgramsChange([...programs, duplicated]);
     };
 
     return (

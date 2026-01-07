@@ -24,7 +24,6 @@ import FamilyManager from './components/features/FamilyManager';
 import SurveyManager from './components/features/SurveyManager';
 import Settings from './components/features/Settings';
 import { ServicesManager } from './components/features/services/ServicesManager';import { Theme, ViewState, UserProfile, TimerState, TextSettings, AuthState } from './types';
-import { CleaningManager } from './components/features/cleaning/CleaningManager';
 
 // Mock User Profile - Fallback seguro
 const USER_PROFILE: UserProfile = {
@@ -273,10 +272,7 @@ function AppContent() {
           setConfig={setAppConfig}
         />;
       case 'services-management':
-        return <ServicesManager />;
-      
-      case 'cleaning-management':
-        return <CleaningManager />;case 'settings':
+        return <ServicesManager />;case 'settings':
         return <Settings
           role={currentUser?.rol || 'ADMIN'}
           appConfig={appConfig}
