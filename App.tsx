@@ -23,6 +23,7 @@ import { MemberManager } from './components/features/MemberManager';
 import FamilyManager from './components/features/FamilyManager';
 import SurveyManager from './components/features/SurveyManager';
 import Settings from './components/features/Settings';
+import { ServicesManager } from './components/features/services/ServicesManager';
 import { Theme, ViewState, UserProfile, TimerState, TextSettings, AuthState } from './types';
 
 // Mock User Profile - Fallback seguro
@@ -271,6 +272,8 @@ function AppContent() {
           config={appConfig}
           setConfig={setAppConfig}
         />;
+      case 'services-management':
+        return <ServicesManager />;
       case 'settings':
         return <Settings
           role={currentUser?.rol || 'ADMIN'}

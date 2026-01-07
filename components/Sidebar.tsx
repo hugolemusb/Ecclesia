@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     LayoutDashboard, Users, UsersRound, ClipboardCheck, Search, Sparkles,
-    Settings as SettingsIcon, LogOut, ChevronRight, Church as ChurchIcon
+    Settings as SettingsIcon, LogOut, ChevronRight, Church as ChurchIcon, Calendar
 } from 'lucide-react';
 import { User } from '../types';
 
@@ -19,6 +19,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, currentUser,
         { id: 'members', label: 'Hermandad', icon: <Users size={20} />, roles: ['ADMIN', 'PASTOR', 'LIDER', 'VOLUNTARIO'] },
         { id: 'families', label: 'Grupos Familiares', icon: <UsersRound size={20} />, roles: ['ADMIN', 'PASTOR', 'LIDER'] },
         { id: 'surveys', label: 'Encuestas', icon: <ClipboardCheck size={20} />, roles: ['ADMIN', 'PASTOR', 'LIDER'] },
+        { id: 'services-management', label: 'Gestión de Servicios', icon: <Calendar size={20} />, roles: ['ADMIN', 'PASTOR', 'LIDER'] },
         { id: 'community', label: 'Entorno Social', icon: <Search size={20} />, roles: ['ADMIN', 'PASTOR', 'LIDER'] },
         { id: 'analysis', label: 'Análisis IA', icon: <Sparkles size={20} />, roles: ['ADMIN', 'PASTOR'] },
         { id: 'settings', label: 'Configuración', icon: <SettingsIcon size={20} />, roles: ['ADMIN'] },
